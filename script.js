@@ -135,7 +135,81 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.addEventListener('load', function() {
         document.body.style.opacity = '1';
+        
+        // 添加AI科技感的粒子效果
+        createAIParticles();
+        
+        // 添加鼠标跟随效果
+        addMouseFollowEffect();
     });
+    
+    // 创建AI粒子效果
+    function createAIParticles() {
+        const particlesContainer = document.createElement('div');
+        particlesContainer.className = 'ai-particles';
+        particlesContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        `;
+        document.body.appendChild(particlesContainer);
+        
+        // 创建粒子
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: linear-gradient(45deg, #667eea, #f093fb);
+                border-radius: 50%;
+                opacity: 0.6;
+                animation: matrixRain ${Math.random() * 10 + 10}s linear infinite;
+                left: ${Math.random() * 100}%;
+                animation-delay: ${Math.random() * 10}s;
+            `;
+            particlesContainer.appendChild(particle);
+        }
+    }
+    
+    // 添加鼠标跟随效果
+    function addMouseFollowEffect() {
+        const cursor = document.createElement('div');
+        cursor.className = 'ai-cursor';
+        cursor.style.cssText = `
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        `;
+        document.body.appendChild(cursor);
+        
+        document.addEventListener('mousemove', function(e) {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
+        
+        // 鼠标悬停时放大光标
+        document.addEventListener('mouseenter', function() {
+            cursor.style.transform = 'scale(1.5)';
+            cursor.style.borderColor = 'rgba(240, 147, 251, 0.8)';
+        });
+        
+        document.addEventListener('mouseleave', function() {
+            cursor.style.transform = 'scale(1)';
+            cursor.style.borderColor = 'rgba(102, 126, 234, 0.5)';
+        });
+    }
     
     // 添加点击外部关闭移动菜单的功能
     document.addEventListener('click', function(e) {
